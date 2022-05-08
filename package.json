@@ -1,0 +1,20 @@
+{
+  "name": "short-url-server",
+  "version": "1.0.0",
+  "main": "index.js",
+  "author": "esllo",
+  "license": "MIT",
+  "scripts": {
+    "start": "tsc && node dist/index"
+  },
+  "private": true,
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@types/node": "^17.0.31",
+    "typescript": "^4.6.4"
+  },
+  "dependencies": {
+    "express": "^4.18.1",
+    "short-unique-id": "^4.4.4"
+  }
+}

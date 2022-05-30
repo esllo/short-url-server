@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zoriga Url Shortener</title>
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      transition: all .25s;
+    }
+
+    header {
+      height: 3em;
+      background: #2979ff;
+      font-size: 1.6em;
+      color: white;
+      line-height: 3em;
+    }
+
+    header>div>span {
+      margin: 0 0.8em;
+    }
+
+    .container {
+      margin: 0 auto;
+      width: 100%;
+      max-width: 900px;
+    }
+
+    main {
+      padding: 2em 0;
+      display: flex;
+      align-items: center;
+      background: white;
+      height: calc(100vh - 5em);
+      box-sizing: border-box;
+    }
+
+    main>div {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    input,
+    button {
+      width: 70%;
+      border: 1px solid #cccccc;
+      padding: 0.8em;
+      outline: none;
+      margin: 0.5em;
+      box-sizing: border-box;
+    }
+
+    button:hover {
+      background: rgba(0, 0, 0, 0.25);
+      cursor: pointer;
+    }
+
+    button:active {
+      background: rgba(0, 0, 0, 0.3);
+    }
+
+    input:focus {
+      border: 1px solid #aaa;
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <div class="container">
+      <span>
+        URL Shortener
+      </span>
+    </div>
+  </header>
+
+  <div class="container">
+    <main>
+      <div>
+        <input id="target" placeholder="Enter target url" />
+        <button id="shorten">Shorten</button>
+        <input id="result" placeholder="" disabled />
+      </div>
+    </main>
+  </div>
+  <script>
+    const target = document.getElementById('target')
+    const result = document.getElementById('result')
+    document.getElementById('shorten').onclick = () => {
+      const { value } = target
+      fetch(`https://zori.ga/generate`, {
+        method: 'post',
+        body: JSON.stringify({
+          url: value
+        })
+      }).then((res) => res.json()).then((json) => {
+        console.log(json)
+        result.value = json.generated
+      }).catch(e => {
+        alert('error occured')
+      })
+    }
+  </script>
+</body>
+
+</html>

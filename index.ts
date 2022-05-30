@@ -29,6 +29,9 @@ app.use((error: Error, request: Request, response: Response, next: NextFunction)
   }
   return next();
 });
+app.get('/', (request, response: Response) => {
+  response.sendFile('./assets/index.html');
+});
 app.use(express.urlencoded({ extended: true }));
 app.use(routes);
 

@@ -55,7 +55,7 @@ async function generateUrl(request: Request, response: Response) {
   } else {
     response.status(400).json({
       status: 400,
-      message: 'invalid url served'
+      message: `invalid url served [${url}]`
     });
   }
 }

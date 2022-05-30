@@ -13,7 +13,7 @@ const credentials = {
   ca: fs.readFileSync(`${base}/chain.pem`)
 };
 
-const index = fs.readFileSync('./assets/index.html');
+const index = fs.readFileSync('./assets/index.html', 'utf-8');
 
 const app = express();
 

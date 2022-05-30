@@ -32,6 +32,7 @@ app.use((error: Error, request: Request, response: Response, next: NextFunction)
   return next();
 });
 app.get('/', (request, response: Response) => {
+  response.set('Content-Type', 'text/html');
   response.send(index);
   response.end();
 });

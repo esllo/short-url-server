@@ -29,6 +29,7 @@ async function generateUrl(request: Request, response: Response) {
             response.status(200).json({
               status: 200,
               token: created.token,
+              generated: `${request.hostname}${created.token}`,
               origin: created.origin,
             });
             break;

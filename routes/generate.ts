@@ -17,6 +17,7 @@ async function generateUrl(request: Request, response: Response) {
       response.status(200).json({
         status: 200,
         token: origin.token,
+        generated: `${request.hostname}${origin.token}`,
         origin: origin.origin,
       });
     } else {

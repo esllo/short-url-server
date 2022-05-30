@@ -13,6 +13,8 @@ const credentials = {
   ca: fs.readFileSync(`${base}/chain.pem`)
 };
 
+const index = fs.readFileSync('./assets/index.html');
+
 const app = express();
 
 mongo();
@@ -30,7 +32,8 @@ app.use((error: Error, request: Request, response: Response, next: NextFunction)
   return next();
 });
 app.get('/', (request, response: Response) => {
-  response.sendFile('./assets/index.html');
+  response.send(index);
+  response.end();
 });
 app.use(express.urlencoded({ extended: true }));
 app.use(routes);

@@ -7,6 +7,11 @@ const base58chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'
 
 const uuid = new ShortUniqueId({ length: 7, dictionary: base58chars });
 
+function concatToken(request: Request, token: string) {
+  const { protocol, hostname } = request;
+  return `${protocol}://${hostname}/${token}`;
+}
+
 async function generateUrl(request: Request, response: Response) {
   const { url } = request.body;
   if (url && isValidURL(url)) {
@@ -17,7 +22,7 @@ async function generateUrl(request: Request, response: Response) {
       response.status(200).json({
         status: 200,
         token: origin.token,
-        generated: `${request.hostname}${origin.token}`,
+        generated: concatToken(request, origin.token),
         origin: origin.origin,
       });
     } else {
@@ -30,7 +35,7 @@ async function generateUrl(request: Request, response: Response) {
             response.status(200).json({
               status: 200,
               token: created.token,
-              generated: `${request.hostname}${created.token}`,
+              generated: concatToken(request, created.token),
               origin: created.origin,
             });
             break;

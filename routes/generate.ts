@@ -2,6 +2,7 @@ import { Request, Response, Router } from "express";
 import ShortUniqueId from "short-unique-id";
 import ShortUrl from "../models/ShortUrl";
 import { isValidURL } from "../utils/url";
+import { rateLimit } from "express-rate-limit";
 
 const base58chars = '123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz'.split('');
 
@@ -60,7 +61,13 @@ async function generateUrl(request: Request, response: Response) {
   }
 }
 
+const limiter = rateLimit({
+  windowMs: 60000, // 1 min
+  max: 150, // 150 times
+  standardHeaders: true, // Return RateLimit header
+});
+
 const router = Router();
-router.post('/generate', generateUrl);
+router.post('/generate', limiter, generateUrl);
 
 export default router;

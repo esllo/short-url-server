@@ -5,6 +5,7 @@ import cors from 'cors';
 import http from 'http';
 import https from 'https';
 import fs from 'fs';
+import reateLimit, { rateLimit } from 'express-rate-limit';
 
 const base = '/etc/letsencrypt/live/zori.ga';
 const credentials = {
@@ -19,7 +20,14 @@ const app = express();
 
 mongo();
 
+const limiter = rateLimit({
+  windowMs: 60000, // 1 min
+  max: 150, // 3 times
+  standardHeaders: true, // Return RateLimit header
+});
+
 app.enable('trust proxy');
+app.use(limiter);
 app.use((request: Request, response: Response, next: NextFunction) => {
   request.secure ? next() : response.redirect(`https://${request.headers.host}${request.url}`);
 });
